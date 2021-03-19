@@ -21,7 +21,7 @@ struct lines
 int read_lines(struct lines **line, FILE * stream)
 {
 	char *buf;
-	size_t bufsize = 32; 	// Not an assumption. Getline() just needs some value
+	size_t bufsize = 32; 	// Not an assumption of line lenght. Getline() just needs some value
 							// for the initial buffer size.  According to man getline,
 							// getline() updates this value dynamically with realloc()
 							// if the read line is longer.
@@ -48,8 +48,8 @@ int read_lines(struct lines **line, FILE * stream)
 				return -1;
 			}
 
-			lp->next->prev = lp; // Seuraavan noden prev-kohtaan nykyinen node
-			lp = lp->next;		 // Siirrytään seuraavaan nodeen
+			lp->next->prev = lp; // Put the current node into the prev field of the next node
+			lp = lp->next;		 // Move on to next node
 
 		}
 		
@@ -68,15 +68,15 @@ void print_lines(struct lines *line, FILE * stream)
 {
 	struct lines * lp;
 	lp = line;
-		while (lp->next != NULL) {		// Kuljetaan listan loppuun, viimeisellä alkiolla ei ole next-alkiota
+		while (lp->next != NULL) {			// Move to the end of the list, since the last node doesn't have a next
 			lp = lp->next;
 		}
 
-		while (lp->prev != NULL) {		// Kuljetaan takaisin alkuun, ensimmäisellä alkiolla ei ole prev-alkiota
-			fputs(lp->string, stream);	// Tulostetaan jokaisen noden string
+		while (lp->prev != NULL) {			// Move back to the start, the first node doesn't have a previous node
+			fprintf(stream, "%s", lp->string);	// Print the string of each node
 			lp = lp->prev;
 		}
-	fputs(lp->string, stream);
+	fprintf(stream, "%s", lp->string);			// Print the string of the last node
 }
 
 void delete_lines(struct lines * line)
@@ -100,7 +100,8 @@ int main(int argc, char* argv[])
 
 	if (argc == 1) {
 
-		// Luetaan stdinistä ja kirjoitetaan stdoutiin, sama koodi kuin viikkotehtävässä
+		// Read lines from stdin
+
 		if (read_lines(&line, stdin) == -1)
 			exit(1);
 
@@ -110,7 +111,7 @@ int main(int argc, char* argv[])
 
 	} else if (argc == 2) {
 
-		// Luetaan annetusta tiedostosta ja kirjoitetaan stdoutiin
+		// Read lines from given file @ argv[1] and write into stdout
 
 		FILE* fp;
 
@@ -132,7 +133,7 @@ int main(int argc, char* argv[])
 
 	} else if (argc == 3) {
 
-		// Luetaan annetusta tiedostosta argv[1] ja kirjoitetaan annettuun tiedostoon argv[2]
+		// Read lines from given file @ argv[1] and write into given file @ argv[2]
 
 		FILE* fp;
 
@@ -161,5 +162,7 @@ int main(int argc, char* argv[])
 	}
 	
 	return 0;
+
+}
 
 
