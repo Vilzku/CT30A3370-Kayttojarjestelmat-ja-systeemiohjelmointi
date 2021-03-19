@@ -61,6 +61,7 @@ int read_lines(struct lines **line, FILE * stream)
 		strcpy(lp->string, buf);
 	}
 	
+	free(buf);
 	return 0;
 }
 
