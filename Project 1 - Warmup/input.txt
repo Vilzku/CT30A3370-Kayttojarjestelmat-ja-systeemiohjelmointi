@@ -1,4 +1,10 @@
-eka rivi
-toka rivi
-kolmas rivi
-neljäs rivi
+yksi
+kaksi
+kolme
+neljä
+viisi
+kuusi
+seitsemän
+kahdeksan
+yhdeksän
+kymmenen
