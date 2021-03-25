@@ -40,6 +40,8 @@ int main(int argc, char *argv[]) {
 
 int grep(char searchterm[], FILE* stream) {
 
+	// Filter every line based on the search term
+
 	char* line_buf;
 	size_t bufsize = 0;
 	while(getline(&line_buf, &bufsize, stream) != -1) {
