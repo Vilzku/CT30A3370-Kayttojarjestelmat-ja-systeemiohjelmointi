@@ -24,9 +24,8 @@ int main(int argc, char *argv[]) {
 			exit(1);
 		}
 
-		// Loop through all lines
+		// Loop through all characters
 		while((char_buf = fgetc(file)) != EOF) {
-
 			if(char_buf == character) {
 				count++;
 			} else {
@@ -39,12 +38,8 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		// hexdump -C out <---------------------------------------
-
-		// pittää vielä loppuun kirjottaa \n ku se i ei tuu sieltä itestää
-		character = '\n';
-		//fwrite(&count, sizeof(int), 1, stdout); <--- ei toimiiiiiiiiiiiiiii
-		//fwrite(&character, sizeof(char), 1, stdout);
+		fwrite(&count, 4, 1, stdout);
+		fwrite(&character, 1, 1, stdout);
 
 		fclose(file);
 	}
