@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
 
 	int count = -1;
 	int character = -1;
+	int char_buf;
 
 	// Loop through all given files
 	for(int i=1; i<argc; i++) {
@@ -24,34 +25,27 @@ int main(int argc, char *argv[]) {
 		}
 
 		// Loop through all lines
-		char* line_buf;
-		size_t bufsize = 0;
-		while(getline(&line_buf, &bufsize, file) != -1) {
+		while((char_buf = fgetc(file)) != EOF) {
 
-			int j = 0;
-			while(strcmp(&line_buf[j], "") != 0) {
-				if(character == line_buf[j]) {
-					count++;
-				} else {
-					if(count > 0) {
-						fwrite(&count, 4, 1, stdout);
-						fwrite(&character, 1, 1, stdout);
-					}
-					character = line_buf[j];
-					count = 1;
+			if(char_buf == character) {
+				count++;
+			} else {
+				if(count > 0) {
+					fwrite(&count, 4, 1, stdout);
+					fwrite(&character, 1, 1, stdout);
 				}
-				j++;
-
+				character = char_buf;
+				count = 1;
 			}
-
 		}
+
+		// hexdump -C out <---------------------------------------
 
 		// pittää vielä loppuun kirjottaa \n ku se i ei tuu sieltä itestää
 		character = '\n';
 		//fwrite(&count, sizeof(int), 1, stdout); <--- ei toimiiiiiiiiiiiiiii
 		//fwrite(&character, sizeof(char), 1, stdout);
 
-		free(line_buf);
 		fclose(file);
 	}
 
