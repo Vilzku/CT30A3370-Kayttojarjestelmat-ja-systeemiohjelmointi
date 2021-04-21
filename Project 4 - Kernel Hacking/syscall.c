@@ -152,16 +152,22 @@ syscall(void)
   // If called system call is getcnt
   if(num == SYS_getcnt) {
 
-	// Assign the current count to current process
+	  // Assign the current count to current process
   	curproc->count = count;
 
   	int arg;
-  	if(argint(0, &arg) < 0) // Get argument
+  	if(argint(0, &arg) < 0) {
+      // Get argument
   	  exit();
-	if(arg != 0) // Reset counter
+    }
+	  if(arg != 0) {
+      // Reset counter
   	  count = 0;
-    if(arg > 0 && num < NELEM(syscalls)) // Change followed system call
+    }
+    if(arg > 0 && num < NELEM(syscalls)) {
+      // Change followed system call
   	  syscallno = arg;
+    }
   }
 
   /**************************************************/

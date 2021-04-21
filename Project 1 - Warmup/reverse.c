@@ -21,10 +21,7 @@ struct lines
 int read_lines(struct lines **line, FILE * stream)
 {
 	char *buf;
-	size_t bufsize = 32; 	// Not an assumption of line lenght. Getline() just needs some value
-							// for the initial buffer size.  According to man getline,
-							// getline() updates this value dynamically with realloc()
-							// if the read line is longer.
+	size_t bufsize = 0;
 	struct lines * lp;	
 
 	// Buffer allocation

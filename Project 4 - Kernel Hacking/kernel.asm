@@ -6492,7 +6492,7 @@ syscall(void)
   if(num == SYS_getcnt) {
 80104a67:	83 f8 16             	cmp    $0x16,%eax
 80104a6a:	74 4c                	je     80104ab8 <syscall+0x78>
-  	  syscallno = arg;
+    }
   }
 
   /**************************************************/
@@ -6539,11 +6539,11 @@ syscall(void)
 80104ab4:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
   	curproc->count = count;
 80104ab8:	a1 bc a5 10 80       	mov    0x8010a5bc,%eax
-  	if(argint(0, &arg) < 0) // Get argument
+  	if(argint(0, &arg) < 0) {
 80104abd:	83 ec 08             	sub    $0x8,%esp
   	curproc->count = count;
 80104ac0:	89 43 14             	mov    %eax,0x14(%ebx)
-  	if(argint(0, &arg) < 0) // Get argument
+  	if(argint(0, &arg) < 0) {
 80104ac3:	8d 45 f4             	lea    -0xc(%ebp),%eax
 80104ac6:	50                   	push   %eax
 80104ac7:	6a 00                	push   $0x0
@@ -6551,14 +6551,14 @@ syscall(void)
 80104ace:	83 c4 10             	add    $0x10,%esp
 80104ad1:	85 c0                	test   %eax,%eax
 80104ad3:	78 23                	js     80104af8 <syscall+0xb8>
-	if(arg != 0) // Reset counter
+	  if(arg != 0) {
 80104ad5:	8b 45 f4             	mov    -0xc(%ebp),%eax
 80104ad8:	85 c0                	test   %eax,%eax
 80104ada:	74 11                	je     80104aed <syscall+0xad>
   	  count = 0;
 80104adc:	c7 05 bc a5 10 80 00 	movl   $0x0,0x8010a5bc
 80104ae3:	00 00 00 
-    if(arg > 0 && num < NELEM(syscalls)) // Change followed system call
+    if(arg > 0 && num < NELEM(syscalls)) {
 80104ae6:	7e 05                	jle    80104aed <syscall+0xad>
   	  syscallno = arg;
 80104ae8:	a3 08 a0 10 80       	mov    %eax,0x8010a008

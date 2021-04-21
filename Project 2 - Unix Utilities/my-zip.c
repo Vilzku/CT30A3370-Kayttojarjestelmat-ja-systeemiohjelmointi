@@ -25,23 +25,38 @@ int main(int argc, char *argv[]) {
 		}
 
 		// Loop through all characters
-		while((char_buf = fgetc(file)) != EOF) {
+		int loop = 1;
+		do {
+
+			// End of file
+			if((char_buf = fgetc(file)) == EOF) {
+				char_buf = '\n';
+				loop = 0;
+			}
+
+			// Increase count
 			if(char_buf == character) {
 				count++;
+
+			// Write count and character
 			} else {
-				if(count > 0) {
+				if(count > 0) { // First character
 					fwrite(&count, 4, 1, stdout);
 					fwrite(&character, 1, 1, stdout);
 				}
 				character = char_buf;
 				count = 1;
 			}
-		}
-
-		fwrite(&count, 4, 1, stdout);
-		fwrite(&character, 1, 1, stdout);
+		} while (loop);
 
 		fclose(file);
+	}
+
+	// Compress last newline characters if there are any
+	if(count > 1) {
+		count--; // EOF is interpret as \n
+		fwrite(&count, 4, 1, stdout);
+		fwrite(&character, 1, 1, stdout);
 	}
 
 	return 0;
