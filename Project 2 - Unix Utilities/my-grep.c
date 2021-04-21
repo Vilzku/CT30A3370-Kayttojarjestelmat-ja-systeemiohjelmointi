@@ -1,3 +1,6 @@
+// my-grep.c
+// Finds all lines matching the searchterm.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

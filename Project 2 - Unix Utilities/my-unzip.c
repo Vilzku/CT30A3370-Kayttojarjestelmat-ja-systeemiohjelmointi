@@ -1,3 +1,6 @@
+// my-unzip.c
+// Decompresses files that have been compressed with my-zip.c using RLE.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

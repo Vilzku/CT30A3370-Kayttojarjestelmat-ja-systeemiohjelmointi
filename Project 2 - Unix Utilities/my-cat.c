@@ -1,5 +1,6 @@
 // my-cat.c
 // Prints out contents of input file(s) to stdout.
+
 #include <stdio.h>
 #include <stdlib.h>
 #define MAXLEN 1024

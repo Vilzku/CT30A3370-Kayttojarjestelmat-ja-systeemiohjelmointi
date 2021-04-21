@@ -3,7 +3,7 @@
 // And prints read line in reverse order to stdout or user-specified file
 
 // Sources:
-//		Getfile usage: https://c-for-dummies.com/blog/?p=1112
+//		Getline usage: https://c-for-dummies.com/blog/?p=1112
 //		Main structure of the program: Week 9 exercise 4
 //		
 
@@ -33,6 +33,7 @@ int read_lines(struct lines **line, FILE * stream)
 	
 	while (getline(&buf, &bufsize, stream) != -1) {
 		
+		// Memory allocation for each line
 		if (*line == NULL) {
 			if ((*line = lp = malloc(sizeof(struct lines))) == NULL) {
 				fprintf(stderr, "Malloc failed\n");
@@ -66,15 +67,19 @@ void print_lines(struct lines *line, FILE * stream)
 {
 	struct lines * lp;
 	lp = line;
-		while (lp->next != NULL) {			// Move to the end of the list, since the last node doesn't have a next
-			lp = lp->next;
-		}
+	// Move to the end of the list, since the last node doesn't have a next
+	while (lp->next != NULL) {
+		lp = lp->next;
+	}
 
-		while (lp->prev != NULL) {			// Move back to the start, the first node doesn't have a previous node
-			fprintf(stream, "%s", lp->string);	// Print the string of each node
-			lp = lp->prev;
-		}
-	fprintf(stream, "%s", lp->string);			// Print the string of the last node
+	// Move back to the start, the first node doesn't have a previous node
+	while (lp->prev != NULL) {
+		// Print the string of each node
+		fprintf(stream, "%s", lp->string);
+		lp = lp->prev;
+	}
+	// Print the string of the last node
+	fprintf(stream, "%s", lp->string);			
 }
 
 void delete_lines(struct lines * line)

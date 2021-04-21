@@ -1,3 +1,6 @@
+// my-zip.c
+// Compresses the file with Run-Length-Encoding
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
